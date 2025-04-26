@@ -160,8 +160,12 @@ def calculate_number_value(horizontal_top, horizontal_bottom, vertical_count, di
     }
 
     # Adjust the order of combinations for hundreds and thousands
+    if quadrant in ["dezenas", "centenas"]:
+        diagonal_45_count, diagonal_135_count = diagonal_135_count, diagonal_45_count
+
     if quadrant in ["centenas", "milhares"]:
         horizontal_top, horizontal_bottom = horizontal_bottom, horizontal_top
+
 
     # Get the corresponding value and apply the multiplier
     value = line_combinations.get((horizontal_top, horizontal_bottom, vertical_count, diagonal_45_count, diagonal_135_count), 0)
