@@ -18,7 +18,7 @@ def gerar_e_mostrar():
     try:
         numero = int(entrada.get())
         img = desenhar_cisterciense(numero)
-        caminho = f"output/imagens_geradas/{numero}_cisterciense.png"
+        caminho = f"output/{numero}_cisterciense.png"
         cv2.imwrite(caminho, img)
         mostrar_imagem_pil(caminho, label_saida)
         label_saida_texto.config(text=f"Cisterciense de: {numero}")

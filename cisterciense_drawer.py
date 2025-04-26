@@ -188,4 +188,4 @@ def mostrar_numero_gerado(numero):
     cv2.imshow(f"Cisterciense {numero}", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    cv2.imwrite(f"output/imagens_geradas/{numero}_cisterciense.png", img)
+    cv2.imwrite(f"output/{numero}_cisterciense.png", img)
