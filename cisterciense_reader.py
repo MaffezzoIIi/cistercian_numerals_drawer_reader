@@ -166,7 +166,6 @@ def calculate_number_value(horizontal_top, horizontal_bottom, vertical_count, di
     if quadrant in ["centenas", "milhares"]:
         horizontal_top, horizontal_bottom = horizontal_bottom, horizontal_top
 
-
     # Get the corresponding value and apply the multiplier
     value = line_combinations.get((horizontal_top, horizontal_bottom, vertical_count, diagonal_45_count, diagonal_135_count), 0)
     return total_value + value * multipliers[quadrant]
@@ -174,7 +173,7 @@ def calculate_number_value(horizontal_top, horizontal_bottom, vertical_count, di
 
 def processar_quadrantes(imagem_path):
     quadrantes = dividir_em_quadrantes(imagem_path)
-    unit_value = 0
+    valores = {"unidades": 0, "dezenas": 0, "centenas": 0, "milhares": 0}
 
     for nome, quadrante in quadrantes.items():
         altura_quadrante, _ = quadrante.shape
@@ -186,24 +185,21 @@ def processar_quadrantes(imagem_path):
         # Detectar e contar linhas verticais
         linhas_verticais = detectar_linhas_verticais(quadrante)
         quantidade_linhas_verticais = contar_linhas(linhas_verticais)
-        # cv2.imshow(f"Linhas Verticais - {nome.upper()}", linhas_verticais)
 
         # Detectar e contar linhas diagonais de 45 graus
         linhas_diagonais_45 = detectar_linhas_diagonais_45(quadrante)
         quantidade_linhas_diagonais = contar_linhas(linhas_diagonais_45)
-        # cv2.imshow(f"Linhas Diagonais 45 - {nome.upper()}", linhas_diagonais_45)
 
         # Detectar e contar linhas diagonais de 135 graus
         linhas_diagonais_135 = detectar_linhas_diagonais_135(quadrante)
         quantidade_linhas_diagonais_135 = contar_linhas(linhas_diagonais_135)
-        # cv2.imshow(f"Linhas Diagonais 135 - {nome.upper()}", linhas_diagonais_135)
 
         # Calcular o valor do número com base nas linhas detectadas
-        unit_value = calculate_number_value(
+        valores[nome] = calculate_number_value(
             linhas_superiores, linhas_inferiores, quantidade_linhas_verticais,
-            quantidade_linhas_diagonais, quantidade_linhas_diagonais_135, nome, unit_value
+            quantidade_linhas_diagonais, quantidade_linhas_diagonais_135, nome, 0
         )
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    return unit_value
+    return valores
